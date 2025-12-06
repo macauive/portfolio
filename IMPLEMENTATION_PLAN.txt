@@ -1,0 +1,307 @@
+# Portfolio Website Implementation Plan
+
+## Overview
+Build a single-page, minimalist portfolio website using Next.js 14 (App Router), TypeScript, Tailwind CSS, and Framer Motion. Design inspired by Apple OS and cluely.com aesthetic with soft shadows, clean spacing, smooth animations, and perfect mobile responsiveness.
+
+## User Preferences
+- **Hero**: Brief intro + immediate project showcase
+- **Layout**: Interactive grid with technology/category filters
+- **Modals**: Non-technical descriptions, tech badges, key achievements (client-friendly)
+- **Tech Stack**: TypeScript, Next.js, Tailwind CSS, Framer Motion
+
+## Implementation Sequence
+
+### Phase 1: Project Initialization (30 min)
+1. Initialize Next.js with TypeScript and Tailwind:
+   ```bash
+   cd /Users/iver/Projects/portfolio
+   npx create-next-app@latest . --typescript --tailwind --app --no-src-dir --import-alias "@/*"
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install framer-motion clsx tailwind-merge
+   ```
+
+### Phase 2: Design System Setup (1 hour)
+
+**File: `tailwind.config.ts`**
+- Custom color palette (neutral grays, blue accents)
+- Soft shadow utilities (soft, soft-lg, inner-soft)
+- Extended spacing (18, 88, 100)
+- Border radius (4xl = 2rem)
+- Custom animations (fade-in, slide-up)
+
+**File: `app/globals.css`**
+- Tailwind imports
+- Custom component classes (gradient-text, card-container, section-container)
+- Typography base styles
+
+### Phase 3: Type Definitions (30 min)
+
+**File: `types/index.ts`**
+- `Project` interface: id, title, category, technologies, description, detailedDescription, achievements, timeline, featured, image, link
+- `ProjectCategory` type: 9 categories (Management & Manufacturing, Financial Systems, Integrations & APIs, etc.)
+- `Skill` interface: name, category
+- `PersonalInfo` interface: name, title, location, email, github, summary
+
+### Phase 4: Content Data Layer (2 hours)
+
+**File: `data/personal.ts`**
+- Name: Iver Macaulay
+- Title: Software Engineer
+- Location: Fort Worth, TX
+- Email: iamacaulay5@gmail.com
+- GitHub: github.com/imacaulay5
+- Summary: "Software engineer delivering integrations, data pipelines, and dashboards for e-commerce, manufacturing, and operations"
+
+**File: `data/skills.ts`**
+- Languages: Python, TypeScript, JavaScript, SQL, DAX, C#, Java, C++
+- Frameworks: Django, Flask, FastAPI, web2py, pandas, Selenium, jQuery
+- Tools: Power BI, Shopify GraphQL, HubSpot CRM, Wayfair GraphQL, Amazon Vendor
+
+**File: `data/projects.ts`** ⭐ CRITICAL
+- Create 16 project objects based on resume and portfolio file
+- Each project needs:
+  - Unique ID
+  - Client-friendly description (brief for card)
+  - Detailed description for modal (non-technical language)
+  - 3-5 key achievements with business impact/metrics
+  - Technology array for filtering
+  - Category assignment
+  - Featured flag for top projects (3-4 projects)
+- Helper functions: `getProjectCategories()`, `getUniqueTechnologies()`
+
+**Projects to include:**
+1. ERP Platform Development (Management & Manufacturing, Featured)
+2. Barcode Scanning System (Management & Manufacturing)
+3. IDMS Loan Data Migration (Financial Systems)
+4. Amazon Vendor Integration (Integrations & APIs, Featured)
+5. Wayfair GraphQL Integration (Integrations & APIs)
+6. HubSpot CRM Integration (Integrations & APIs)
+7. RingCentral Phone Integration (Integrations & APIs)
+8. Power BI Analytics Dashboards (Analytics & BI, Featured)
+9. Shopify E-commerce Platform (E-commerce)
+10. WooCommerce Integration (E-commerce)
+11. Customer Self-Service Portal (Internal Tools)
+12. Operations Dashboard (Internal Tools)
+13. Psychological Testing Platform (Product Development, Featured)
+14. AI Customer Support Chatbot (AI & Automation)
+15. Web Automation Suite (AI & Automation)
+16. Network Infrastructure Optimization (Infrastructure)
+
+### Phase 5: Component Development (4 hours)
+
+**File: `components/TechBadge.tsx`**
+- Simple pill-shaped badge for technology tags
+- Props: technology (string)
+- Styling: rounded-full, subtle background
+
+**File: `components/Hero.tsx`**
+- Framer Motion fade-in animation
+- Name with gradient text effect
+- Title and summary
+- Contact info with icons (location, email, GitHub)
+- Responsive text sizing (5xl → 7xl)
+
+**File: `components/FilterBar.tsx`**
+- Sticky positioning at top
+- Two filter sections: Category and Technology
+- Pill-shaped buttons with active state (blue background)
+- Props: categories, technologies, selected values, onChange handlers
+- Backdrop blur effect
+
+**File: `components/ProjectCard.tsx`**
+- Rounded card with soft shadow
+- Hover effects: shadow increase, title color change, arrow movement
+- Featured badge (if applicable)
+- Category label
+- Title (h3)
+- Brief description (line-clamp-3)
+- Tech badges (max 4 visible, "+X more" if needed)
+- "Learn more" CTA with arrow
+- Staggered animation based on index
+- Props: project, onClick, index
+
+**File: `components/ProjectModal.tsx`** ⭐ CRITICAL
+- Framer Motion AnimatePresence for smooth enter/exit
+- Backdrop overlay with blur
+- Spring animation for natural feel
+- Sticky header with close button
+- Sections:
+  - Header: Featured badge, category, title, timeline
+  - Technologies: All tech badges
+  - Overview: Detailed description
+  - Key Achievements: Bulleted list with checkmark icons
+  - External link (if applicable)
+- Close handlers: Escape key, backdrop click, X button
+- Body scroll lock when open
+- Props: project (null when closed), onClose
+
+**File: `components/ProjectGrid.tsx`** ⭐ CRITICAL
+- State management: selectedCategory, selectedTech, selectedProject
+- Filter logic with useMemo
+- Results count display
+- Responsive grid: 1 col mobile, 2 tablet, 3 desktop
+- Empty state with "Clear Filters" button
+- Integrates FilterBar, ProjectCard array, ProjectModal
+- Gap spacing: 6 (md:8)
+
+**File: `components/Footer.tsx`**
+- Border top separator
+- Personal info, contact links, copyright
+- Responsive layout (column on mobile, row on desktop)
+
+**File: `lib/utils.ts`**
+- cn() function for merging Tailwind classes (uses clsx and tailwind-merge)
+
+### Phase 6: Page Assembly (30 min)
+
+**File: `app/layout.tsx`**
+- Inter font from next/font/google
+- Metadata: title, description, keywords, Open Graph tags
+- SEO optimization
+
+**File: `app/page.tsx`**
+- Simple composition: Hero, ProjectGrid, Footer
+- No client-side logic (handled in components)
+
+### Phase 7: Content Refinement (2 hours)
+
+**Critical Task:** Review and polish all project descriptions
+- Ensure non-technical, client-friendly language
+- Focus on business value and outcomes
+- Highlight metrics and achievements
+- Keep descriptions concise but compelling
+- Proofread for typos and clarity
+
+### Phase 8: Testing & Polish (1 hour)
+
+**Functionality Checks:**
+- All filters work (category, tech, combined)
+- Modal opens/closes correctly (click, escape, backdrop)
+- Body scroll locks when modal open
+- Links work (email, GitHub)
+- Featured badges display correctly
+
+**Responsive Testing:**
+- Mobile (375px): Single column, no horizontal scroll
+- Tablet (768px): 2 columns
+- Desktop (1024px+): 3 columns
+- Filter bar responsive at all sizes
+- Modal responsive at all sizes
+
+**Performance:**
+- Run Lighthouse audit (target 95+ performance)
+- Check for console errors
+- Test animation smoothness
+- Verify fast load time
+
+### Phase 9: Deployment (30 min)
+
+1. Initialize Git:
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial portfolio setup"
+   ```
+
+2. Push to GitHub:
+   ```bash
+   git remote add origin https://github.com/imacaulay5/portfolio.git
+   git branch -M main
+   git push -u origin main
+   ```
+
+3. Deploy to Vercel:
+   - Visit vercel.com
+   - Import GitHub repository
+   - Auto-detects Next.js
+   - Click "Deploy"
+   - Optional: Configure custom domain
+
+## Critical Files Summary
+
+| File | Purpose | Priority |
+|------|---------|----------|
+| `data/projects.ts` | All portfolio content | ⭐ CRITICAL |
+| `components/ProjectGrid.tsx` | Core filtering/state logic | ⭐ CRITICAL |
+| `components/ProjectModal.tsx` | Detail showcase | ⭐ CRITICAL |
+| `tailwind.config.ts` | Design system foundation | HIGH |
+| `types/index.ts` | Type safety backbone | HIGH |
+| `components/ProjectCard.tsx` | Card display | MEDIUM |
+| `components/FilterBar.tsx` | Filter UI | MEDIUM |
+| `components/Hero.tsx` | Landing section | MEDIUM |
+
+## Design Tokens
+
+**Colors:**
+- Primary Blue: #4F7CFF
+- Dark Text: #19191D
+- Secondary Text: #31343E
+- Muted Text: #6B7280
+- Background Light: #F8F9FB
+- Background Card: #FFFFFF
+- Background Subtle: #E5E9F2
+
+**Shadows:**
+- Soft: 0 2px 8px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06)
+- Soft-lg: 0 4px 16px rgba(0,0,0,0.08), 0 8px 32px rgba(0,0,0,0.12)
+
+**Spacing:**
+- Section padding: py-20 (md:py-32)
+- Card padding: p-6 (md:p-8)
+- Grid gap: gap-6 (md:gap-8)
+- Max width: max-w-7xl
+
+**Border Radius:**
+- Cards: rounded-3xl (24px)
+- Modal: rounded-4xl (32px)
+- Buttons: rounded-full
+
+## Animation Strategy
+
+**Framer Motion Usage:**
+- Hero: Fade in + slide up (0.6s)
+- Project cards: Staggered fade in (0.05s delay per card)
+- Modal backdrop: Fade in (0.2s)
+- Modal content: Scale + fade with spring physics
+- Hover: Shadow/color transitions (0.3s)
+
+**Performance:**
+- Use transform and opacity only
+- Avoid animating layout properties
+- GPU-accelerated animations
+
+## Content Editing Workflow
+
+**To add/edit projects after launch:**
+1. Open `data/projects.ts`
+2. Add/modify project object
+3. Ensure unique ID
+4. Save file
+5. Deploy to Vercel (auto-rebuild)
+
+**No code knowledge required** - just edit the data file!
+
+## Estimated Timeline
+
+- **Setup & Configuration**: 2 hours
+- **Component Development**: 4 hours
+- **Content Creation**: 2 hours
+- **Testing & Polish**: 1 hour
+- **Deployment**: 30 minutes
+
+**Total: 9.5 hours** (can be split across 2-3 days)
+
+## Next Steps After Implementation
+
+1. Test on real devices (not just browser resize)
+2. Share with friends/colleagues for feedback
+3. Optimize project descriptions based on target audience
+4. Consider adding: contact form, resume download, dark mode
+5. Set up analytics (Vercel Analytics or Google Analytics)
+
+---
+
+**Ready to build!** This plan provides a complete roadmap from empty directory to deployed portfolio.
