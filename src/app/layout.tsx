@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { ThemeProvider } from 'next-themes';
 import './globals.css';
 
 export const viewport: Viewport = {
@@ -40,11 +41,13 @@ export default function RootLayout({
       <body
         className={`${geist.variable} ${geistMono.variable} bg-white tracking-tight antialiased dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50`}
       >
-        <div className="flex min-h-screen w-full flex-col">
-          <div className="relative mx-auto w-full max-w-screen-sm flex-1 px-4 pt-20 pb-12">
-            {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <div className="flex min-h-screen w-full flex-col">
+            <div className="relative mx-auto w-full max-w-screen-sm flex-1 px-4 pt-20 pb-12">
+              {children}
+            </div>
           </div>
-        </div>
+        </ThemeProvider>
       </body>
     </html>
   );

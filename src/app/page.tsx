@@ -3,6 +3,7 @@
 import Hero from '@/components/Hero';
 import ProjectGrid from '@/components/ProjectGrid';
 import Footer from '@/components/Footer';
+import ThemeToggle from '@/components/ThemeToggle';
 import { motion } from 'framer-motion';
 
 const VARIANTS_CONTAINER = {
@@ -17,15 +18,18 @@ const VARIANTS_CONTAINER = {
 
 export default function Home() {
   return (
-    <motion.main
-      className="space-y-16"
-      variants={VARIANTS_CONTAINER}
-      initial="hidden"
-      animate="visible"
-    >
-      <Hero />
-      <ProjectGrid />
-      <Footer />
-    </motion.main>
+    <>
+      <ThemeToggle />
+      <motion.main
+        className="space-y-16"
+        variants={VARIANTS_CONTAINER}
+        initial="hidden"
+        animate="visible"
+      >
+        <Hero />
+        <ProjectGrid />
+        <Footer />
+      </motion.main>
+    </>
   );
 }
