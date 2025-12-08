@@ -1,90 +1,47 @@
-"use client";
+'use client';
 
-import {
-  AvatarGroup,
-  Carousel,
-  Column,
-  Flex,
-  Heading,
-  SmartLink,
-  Text,
-} from "@once-ui-system/core";
+import { Project } from '@/types';
+import TechBadge from './TechBadge';
 
 interface ProjectCardProps {
-  href: string;
-  priority?: boolean;
-  images: string[];
-  title: string;
-  content: string;
-  description: string;
-  avatars: { src: string }[];
-  link: string;
+  project: Project;
+  onClick: () => void;
+  index: number;
 }
 
-export const ProjectCard: React.FC<ProjectCardProps> = ({
-  href,
-  images = [],
-  title,
-  content,
-  description,
-  avatars,
-  link,
-}) => {
+export default function ProjectCard({ project, onClick, index }: ProjectCardProps) {
   return (
-    <Column fillWidth gap="m">
-      <Carousel
-        sizes="(max-width: 960px) 100vw, 960px"
-        items={images.map((image) => ({
-          slide: image,
-          alt: title,
-        }))}
-      />
-      <Flex
-        s={{ direction: "column" }}
-        fillWidth
-        paddingX="s"
-        paddingTop="12"
-        paddingBottom="24"
-        gap="l"
-      >
-        {title && (
-          <Flex flex={5}>
-            <Heading as="h2" wrap="balance" variant="heading-strong-xl">
-              {title}
-            </Heading>
-          </Flex>
+    <div
+      onClick={onClick}
+      className="cursor-pointer group p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors"
+    >
+      <div className="flex items-start justify-between mb-2">
+        <div className="text-sm text-zinc-500 dark:text-zinc-400">{project.category}</div>
+        {project.featured && (
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100">
+            Featured
+          </span>
         )}
-        {(avatars?.length > 0 || description?.trim() || content?.trim()) && (
-          <Column flex={7} gap="16">
-            {avatars?.length > 0 && <AvatarGroup avatars={avatars} size="m" reverse />}
-            {description?.trim() && (
-              <Text wrap="balance" variant="body-default-s" onBackground="neutral-weak">
-                {description}
-              </Text>
-            )}
-            <Flex gap="24" wrap>
-              {content?.trim() && (
-                <SmartLink
-                  suffixIcon="arrowRight"
-                  style={{ margin: "0", width: "fit-content" }}
-                  href={href}
-                >
-                  <Text variant="body-default-s">Read case study</Text>
-                </SmartLink>
-              )}
-              {link && (
-                <SmartLink
-                  suffixIcon="arrowUpRightFromSquare"
-                  style={{ margin: "0", width: "fit-content" }}
-                  href={link}
-                >
-                  <Text variant="body-default-s">View project</Text>
-                </SmartLink>
-              )}
-            </Flex>
-          </Column>
+      </div>
+
+      <h4 className="text-base font-medium text-zinc-900 dark:text-zinc-50 mb-2 group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors">
+        {project.title}
+      </h4>
+
+      <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-3 line-clamp-2">
+        {project.description}
+      </p>
+
+      <div className="flex flex-wrap gap-1.5">
+        {project.technologies.slice(0, 3).map((tech) => (
+          <TechBadge key={tech} technology={tech} />
+        ))}
+        {project.technologies.length > 3 && (
+          <span className="text-xs text-zinc-500 dark:text-zinc-400 self-center">
+            +{project.technologies.length - 3}
+          </span>
         )}
-      </Flex>
-    </Column>
+      </div>
+    </div>
   );
-};
+}
