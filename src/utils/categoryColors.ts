@@ -59,11 +59,11 @@ export const categoryColors: Record<ProjectCategory, CategoryColors> = {
     border: 'border-purple-200 dark:border-purple-800',
   },
   'AI & Automation': {
-    light: '#6366f1',
-    dark: '#818cf8',
-    gradient: 'from-indigo-500 to-violet-500',
-    bg: 'bg-indigo-50 dark:bg-indigo-950/30',
-    border: 'border-indigo-200 dark:border-indigo-800',
+    light: '#ef4444',
+    dark: '#f87171',
+    gradient: 'from-red-500 to-rose-500',
+    bg: 'bg-red-50 dark:bg-red-950/30',
+    border: 'border-red-200 dark:border-red-800',
   },
   'Infrastructure': {
     light: '#64748b',

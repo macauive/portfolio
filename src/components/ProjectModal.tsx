@@ -2,7 +2,8 @@
 
 import { Project } from '@/types';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import TechBadge from './TechBadge';
 import ImageGallery from './ImageGallery';
 import CategoryBadge from './CategoryBadge';
@@ -15,6 +16,13 @@ interface ProjectModalProps {
 }
 
 export default function ProjectModal({ project, onClose }: ProjectModalProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
   // Close on Escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -36,13 +44,13 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     };
   }, [project]);
 
-  if (!project) return null;
+  if (!project || !mounted) return null;
 
   const screenshots = getProjectScreenshots(project);
   const hasImages = hasProjectImages(project);
   const colors = getCategoryColor(project.category);
 
-  return (
+  const modalContent = (
     <AnimatePresence>
       {project && (
         <>
@@ -197,4 +205,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
       )}
     </AnimatePresence>
   );
+
+  return createPortal(modalContent, document.body);
 }

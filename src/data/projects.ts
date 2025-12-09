@@ -2,6 +2,28 @@ import { Project } from '@/types';
 
 export const projects: Project[] = [
   {
+    id: 'verizon-ai-analysis',
+    title: 'Verizon AI Analysis API',
+    category: 'AI & Automation',
+    technologies: ['Python', 'Django', 'REST API', 'AI/ML', 'Neural Networks'],
+    description: 'ML-based PCAP file analysis system for telecom network anomaly detection',
+    detailedDescription: 'Built an advanced REST API for analyzing PCAP files from telecom networks using multiple ML models including autoencoders and neural networks. The system performs comprehensive protocol analysis for GTP, SIP, S1AP, and Diameter protocols, providing automated anomaly detection and classification with detailed packet statistics and real-time status tracking.',
+    achievements: [
+      'Multi-model ML pipeline with autoencoder and neural network classification',
+      'Protocol-specific analysis for GTP, SIP, S1AP, and Diameter protocols',
+      'Automated anomaly detection with per-packet and per-protocol classification',
+      'RESTful API with token authentication and comprehensive status tracking',
+    ],
+    featured: true,
+    images: {
+      screenshots: [
+        '/images/projects/verizon-ai-analysis/dashboard.png',
+        '/images/projects/verizon-ai-analysis/ai-analysis.png',
+        '/images/projects/verizon-ai-analysis/api-docs.png',
+      ],
+    },
+  },
+  {
     id: 'erp-platform',
     title: 'Enterprise ERP Platform',
     category: 'Management & Manufacturing',
@@ -13,7 +35,7 @@ export const projects: Project[] = [
       'Integrated barcode scanning system for seamless inventory tracking',
       'Real-time visibility into production status across multiple facilities',
     ],
-    featured: true,
+    featured: false,
   },
   {
     id: 'barcode-system',
@@ -53,7 +75,7 @@ export const projects: Project[] = [
       'Automated container packing and tracking number management',
       'Reduced shipment confirmation errors by 95%',
     ],
-    featured: true,
+    featured: false,
   },
   {
     id: 'wayfair-integration',
@@ -107,6 +129,12 @@ export const projects: Project[] = [
       'Enabled data-driven decision making across organization',
     ],
     featured: true,
+    images: {
+      screenshots: [
+        '/images/projects/powerbi-dashboards/gross_sales_by_customer.png',
+        '/images/projects/powerbi-dashboards/gross_sales_by_sku.png',
+      ],
+    },
   },
   {
     id: 'shopify-store',
