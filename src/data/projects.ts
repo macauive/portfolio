@@ -13,7 +13,6 @@ export const projects: Project[] = [
       'Integrated barcode scanning system for seamless inventory tracking',
       'Real-time visibility into production status across multiple facilities',
     ],
-    timeline: 'Aug 2023 - Present',
     featured: true,
   },
   {

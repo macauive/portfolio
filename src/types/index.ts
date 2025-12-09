@@ -8,8 +8,13 @@ export interface Project {
   achievements: string[]; // Key metrics/accomplishments
   timeline?: string; // e.g., "Aug 2023 - Present"
   featured?: boolean; // Highlight important projects
-  image?: string; // Optional project image
   link?: string; // External link if applicable
+  images?: {
+    thumbnail?: string; // Path relative to /public (600x400px)
+    hero?: string; // Large header image for modal (1200x800px)
+    screenshots?: string[]; // Array of detail images
+    demo?: string; // Video demo path
+  };
 }
 
 export type ProjectCategory =
