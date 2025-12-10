@@ -201,6 +201,12 @@ export const projects: Project[] = [
       'Multi-tenant architecture supporting multiple clinics',
     ],
     featured: true,
+    images: {
+      screenshots: [
+        '/images/projects/psychological-testing/select-patient.png',
+        '/images/projects/psychological-testing/add-patient.png',
+      ],
+    },
   },
   {
     id: 'ai-chatbot',
