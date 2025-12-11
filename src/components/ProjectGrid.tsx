@@ -39,7 +39,7 @@ export default function ProjectGrid() {
         className="mb-16"
       >
         <h3 className="mb-5 text-lg font-medium text-zinc-900 dark:text-zinc-50">
-          Featured Projects
+          Projects
         </h3>
 
         <div className="grid grid-cols-1 gap-6">
@@ -62,8 +62,8 @@ export default function ProjectGrid() {
           transition={{ duration: 0.3, delay: 0.2 }}
           className="mb-16"
         >
-          <h3 className="mb-5 text-lg font-medium text-zinc-900 dark:text-zinc-50">
-            More Projects
+          <h3 className="mb-5 text-sm font-medium text-zinc-600 dark:text-zinc-400">
+            More
           </h3>
 
           <ProjectCarousel

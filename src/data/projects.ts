@@ -5,7 +5,7 @@ export const projects: Project[] = [
     id: 'verizon-ai-analysis',
     title: 'Verizon AI Analysis API',
     category: 'AI & Automation',
-    technologies: ['Python', 'Django', 'REST API', 'AI/ML', 'Neural Networks'],
+    technologies: ['AI/ML', 'Python', 'REST API', 'Django', 'Neural Networks'],
     description: 'ML-based PCAP file analysis system for telecom network anomaly detection',
     detailedDescription: 'Built an advanced REST API for analyzing PCAP files from telecom networks using multiple ML models including autoencoders and neural networks. The system performs comprehensive protocol analysis for GTP, SIP, S1AP, and Diameter protocols, providing automated anomaly detection and classification with detailed packet statistics and real-time status tracking.',
     achievements: [
@@ -27,7 +27,7 @@ export const projects: Project[] = [
     id: 'erp-platform',
     title: 'Enterprise ERP Platform',
     category: 'Management & Manufacturing',
-    technologies: ['Python', 'Django', 'web2py', 'SQL', 'ZPL'],
+    technologies: ['Python', 'web2py', 'SQL', 'ZPL'],
     description: 'Comprehensive ERP system streamlining manufacturing operations and inventory management',
     detailedDescription: 'Designed and built a large-scale ERP platform that brings together APIs, warehouse management, EDI integration, automated labeling, and business intelligence. The system handles everything from purchase order receipt to work order management, providing real-time visibility across all manufacturing operations.',
     achievements: [
