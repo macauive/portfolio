@@ -20,7 +20,10 @@ export const metadata: Metadata = {
   },
   description: 'Software engineer delivering integrations, data pipelines, and dashboards for e-commerce, manufacturing, and operations',
   icons: {
-    icon: '/icon.png',
+    icon: [
+      { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
+    ],
+    shortcut: '/favicon.png',
   },
 };
 
