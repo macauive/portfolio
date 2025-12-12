@@ -19,12 +19,6 @@ export const metadata: Metadata = {
     template: '%s | Iver Macaulay'
   },
   description: 'Software engineer delivering integrations, data pipelines, and dashboards for e-commerce, manufacturing, and operations',
-  icons: {
-    icon: [
-      { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
-    ],
-    shortcut: '/favicon.png',
-  },
 };
 
 const geist = Geist({
