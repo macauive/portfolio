@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Project } from '@/types';
+import ProjectCard from './ProjectCard';
 import CarouselCard from './CarouselCard';
 
 interface ProjectCarouselProps {
@@ -139,28 +140,39 @@ export default function ProjectCarousel({ projects, onProjectClick }: ProjectCar
           }}
           style={{ cursor: 'grab' }}
         >
-          {projects.map((project, index) => (
-            <div
-              key={project.id}
-              className="flex-shrink-0"
-              style={{
-                width: cardSize > 0 ? `${cardSize}px` : 'auto',
-                height: cardSize > 0 ? `${cardSize * 1.2}px` : 'auto',
-              }}
-            >
-              <motion.div
-                className="h-full w-full"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.05 }}
+          {projects.map((project, index) => {
+            const isDesktop = cardsPerView > 1;
+            return (
+              <div
+                key={project.id}
+                className="flex-shrink-0"
+                style={{
+                  width: cardSize > 0 ? `${cardSize}px` : 'auto',
+                  height: isDesktop && cardSize > 0 ? `${cardSize * 1.2}px` : 'auto',
+                }}
               >
-                <CarouselCard
-                  project={project}
-                  onClick={() => onProjectClick(project)}
-                />
-              </motion.div>
-            </div>
-          ))}
+                <motion.div
+                  className="h-full w-full"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.05 }}
+                >
+                  {isDesktop ? (
+                    <CarouselCard
+                      project={project}
+                      onClick={() => onProjectClick(project)}
+                    />
+                  ) : (
+                    <ProjectCard
+                      project={project}
+                      onClick={() => onProjectClick(project)}
+                      index={index}
+                    />
+                  )}
+                </motion.div>
+              </div>
+            );
+          })}
         </motion.div>
       </div>
 
