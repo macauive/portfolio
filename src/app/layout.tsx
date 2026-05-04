@@ -15,10 +15,10 @@ export const metadata: Metadata = {
     canonical: '/'
   },
   title: {
-    default: 'Iver Macaulay - Software Engineer',
+    default: 'Iver Macaulay - AI Engineer',
     template: '%s | Iver Macaulay'
   },
-  description: 'Software engineer delivering integrations, data pipelines, and dashboards for e-commerce, manufacturing, and operations',
+  description: 'AI engineer building practical automation, transcription, lead scoring, data pipelines, and operational systems',
 };
 
 const geist = Geist({

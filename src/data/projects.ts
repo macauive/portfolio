@@ -2,6 +2,36 @@ import { Project } from '@/types';
 
 export const projects: Project[] = [
   {
+    id: 'amountly',
+    title: 'Amountly',
+    category: 'Product Development',
+    technologies: ['Next.js', 'Vercel', 'TypeScript', 'AI-assisted UX'],
+    description: 'AI-assisted accounting workspace for bills, expenses, invoices, and tax prep',
+    detailedDescription: 'Built and deployed Amountly, a simple accounting workspace that keeps bills, expenses, invoices, and tax preparation organized around the next financial action. The product includes a clean workspace preview, financial search, task-oriented money workflows, and production deployment on Vercel at amountly.app.',
+    achievements: [
+      'Shipped a production SaaS-style landing and app entry point on Vercel',
+      'Designed workflows around bills, expenses, invoices, tax records, and financial search',
+      'Built a focused product narrative for reducing day-to-day accounting friction',
+    ],
+    featured: true,
+    link: 'https://amountly.app',
+  },
+  {
+    id: 'rescue-cooling-ai-lead-intelligence',
+    title: 'AI Call Intelligence Pipeline',
+    category: 'AI & Automation',
+    technologies: ['OpenAI Whisper', 'GPT-4o Mini', 'Python', 'RingCentral', 'HubSpot'],
+    description: 'AI pipeline that transcribes rental calls, scores lead quality, and updates HubSpot contacts',
+    detailedDescription: 'Built an AI-assisted call intelligence pipeline that pulls RingCentral recordings, transcribes audio with OpenAI Whisper, analyzes transcripts with GPT-4o Mini, and writes lead score, service location, customer type, recording links, and transcript notes back into HubSpot. The workflow skips already-processed calls, maps internal phone numbers to staff and branch context, and avoids creating low-quality or non-lead records.',
+    achievements: [
+      'Automated RingCentral call transcription using OpenAI audio transcription',
+      'Used GPT-4o Mini to classify lead quality, customer type, and service location from transcripts',
+      'Synced scored leads, recordings, transcripts, and ownership context into HubSpot',
+      'Added guardrails for duplicate calls, internal calls, non-leads, and invalid HubSpot location values',
+    ],
+    featured: true,
+  },
+  {
     id: 'verizon-ai-analysis',
     title: 'Verizon AI Analysis API',
     category: 'AI & Automation',

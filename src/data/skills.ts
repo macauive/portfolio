@@ -21,7 +21,11 @@ export const skills: Skill[] = [
   { name: 'jQuery', category: 'framework' },
 
   // Tools & Platforms
+  { name: 'OpenAI API', category: 'platform' },
+  { name: 'Whisper Transcription', category: 'platform' },
+  { name: 'GPT-4o Mini', category: 'platform' },
   { name: 'Power BI', category: 'tool' },
+  { name: 'RingCentral API', category: 'platform' },
   { name: 'Shopify GraphQL', category: 'platform' },
   { name: 'HubSpot CRM', category: 'platform' },
   { name: 'Wayfair GraphQL', category: 'platform' },

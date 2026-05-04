@@ -9,25 +9,26 @@ import { skills } from '@/data/skills';
 import { Project } from '@/types';
 import ProjectModal from '@/components/ProjectModal';
 
-type SectionKey = 'home' | 'work' | 'skills' | 'contact';
+type SectionKey = 'home' | 'work' | 'projects' | 'skills' | 'contact';
 
 const NAV_ITEMS: Array<{ key: string; label: string; section: SectionKey }> = [
   { key: 'h', label: 'home.md', section: 'home' },
   { key: 'w', label: 'work.md', section: 'work' },
+  { key: 'p', label: 'projects.md', section: 'projects' },
   { key: 's', label: 'skills.md', section: 'skills' },
   { key: 'c', label: 'contact.md', section: 'contact' },
 ];
 
 const selectedProjectIds = [
+  'rescue-cooling-ai-lead-intelligence',
   'verizon-ai-analysis',
   'powerbi-dashboards',
-  'psychological-testing',
-  'erp-platform',
+  'shopify-store',
   'amazon-integration',
   'hubspot-crm',
-  'shopify-store',
-  'customer-portal',
 ];
+
+const productProjectIds = ['amountly'];
 
 function Prompt({ children }: { children: React.ReactNode }) {
   return (
@@ -64,10 +65,21 @@ export default function Home() {
     }, {});
   }, []);
 
+  const productProjects = useMemo(() => {
+    return productProjectIds
+      .map((id) => projects.find((project) => project.id === id))
+      .filter((project): project is Project => Boolean(project));
+  }, []);
+
   const activeSection = useMemo<SectionKey>(() => {
     const section = pathname.split('/')[1];
 
-    if (section === 'work' || section === 'skills' || section === 'contact') {
+    if (
+      section === 'work' ||
+      section === 'projects' ||
+      section === 'skills' ||
+      section === 'contact'
+    ) {
       return section;
     }
 
@@ -160,18 +172,18 @@ export default function Home() {
               {activeSection === 'home' && (
                 <div className="max-w-[560px] space-y-6 text-[13px] leading-6 text-neutral-400">
                   <p>
-                    Hey, I&apos;m Iver, a software engineer focused on
-                    integrations, data pipelines, automation, and dashboards for
-                    e-commerce, manufacturing, and operations teams.
+                    Hey, I&apos;m Iver, an AI engineer focused on practical
+                    automation, call intelligence, lead scoring, data
+                    extraction, and operational AI systems.
                   </p>
                   <p>
-                    I build practical systems that reduce manual work, connect
-                    messy business processes, and make important data easier to
-                    act on.
+                    I build systems that turn messy business inputs like calls,
+                    recordings, PDFs, API payloads, and CRM activity into
+                    cleaner decisions and next actions.
                   </p>
                   <p>
-                    I like software that is direct, dependable, and shaped
-                    around the people who have to use it every day.
+                    I like AI that is direct, dependable, and wired into the
+                    workflows people already use every day.
                   </p>
                   <p>
                     If you&apos;re in tech or operations, let&apos;s{' '}
@@ -184,7 +196,7 @@ export default function Home() {
                     .
                   </p>
                   <p className="font-semibold text-cyan-400">
-                    The work should feel useful.
+                    The model should move the work forward.
                   </p>
                 </div>
               )}
@@ -192,6 +204,32 @@ export default function Home() {
               {activeSection === 'work' && (
                 <div className="max-w-[590px] space-y-5">
                   {selectedProjects.map((project) => (
+                    <button
+                      key={project.id}
+                      type="button"
+                      onClick={() => setSelectedProject(project)}
+                      className="block w-full border-b border-neutral-800 pb-5 text-left last:border-b-0 focus:outline-none focus:ring-2 focus:ring-cyan-400/50"
+                    >
+                      <span className="block text-[13px] font-semibold leading-5 text-neutral-200 transition-colors hover:text-cyan-400">
+                        {project.title}
+                      </span>
+                      <span className="mt-1 block text-[12px] font-semibold leading-5 text-cyan-400">
+                        {project.category}
+                      </span>
+                      <span className="mt-2 block text-[13px] leading-6 text-neutral-500">
+                        {project.description}
+                      </span>
+                      <span className="mt-2 block text-[12px] leading-5 text-neutral-600">
+                        {project.technologies.slice(0, 5).join(' / ')}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {activeSection === 'projects' && (
+                <div className="max-w-[590px] space-y-5">
+                  {productProjects.map((project) => (
                     <button
                       key={project.id}
                       type="button"

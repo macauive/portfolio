@@ -2,9 +2,9 @@ import { PersonalInfo } from '@/types';
 
 export const personalInfo: PersonalInfo = {
   name: 'Iver Macaulay',
-  title: 'Software Engineer',
+  title: 'AI Engineer',
   location: 'Fort Worth, TX',
   email: 'macauive@icloud.com',
   github: 'github.com/imacaulay5',
-  summary: 'Software engineer delivering integrations, data pipelines, and dashboards for e-commerce, manufacturing, and operations',
+  summary: 'AI engineer building practical automation, transcription, lead scoring, data pipelines, and operational systems',
 };
