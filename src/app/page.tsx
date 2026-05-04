@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { personalInfo } from '@/data/personal';
 import { projects } from '@/data/projects';
@@ -52,19 +52,24 @@ const terminalLines = [
   'Links loaded. Standing by...',
 ];
 
+let hasAnimatedTerminalStatus = false;
+
 function AnimatedTerminalStatus() {
-  const [visibleLineCount, setVisibleLineCount] = useState(0);
+  const [visibleLineCount, setVisibleLineCount] = useState(() =>
+    hasAnimatedTerminalStatus ? terminalLines.length : 0,
+  );
 
   useEffect(() => {
     const reduceMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches;
 
-    if (reduceMotion) {
+    if (reduceMotion || hasAnimatedTerminalStatus) {
       setVisibleLineCount(terminalLines.length);
       return;
     }
 
+    hasAnimatedTerminalStatus = true;
     setVisibleLineCount(0);
 
     const timeouts = terminalLines.map((_, index) =>
@@ -95,7 +100,13 @@ function AnimatedTerminalStatus() {
   );
 }
 
-function ProjectRow({ project, showLink = false }: { project: Project; showLink?: boolean }) {
+function ProjectRow({
+  project,
+  showLink = false,
+}: {
+  project: Project;
+  showLink?: boolean;
+}) {
   return (
     <article className="border-b border-neutral-800 pb-5 last:border-b-0">
       <div className="flex items-start justify-between gap-4">
@@ -131,6 +142,7 @@ function ProjectRow({ project, showLink = false }: { project: Project; showLink?
 
 export default function Home() {
   const pathname = usePathname();
+  const router = useRouter();
 
   const selectedProjects = useMemo(() => {
     return selectedProjectIds
@@ -170,6 +182,43 @@ export default function Home() {
   const activeLabel =
     NAV_ITEMS.find((item) => item.section === activeSection)?.label ??
     'home.md';
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (
+        event.defaultPrevented ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.altKey
+      ) {
+        return;
+      }
+
+      const target = event.target as HTMLElement | null;
+      const tagName = target?.tagName.toLowerCase();
+
+      if (
+        tagName === 'input' ||
+        tagName === 'textarea' ||
+        tagName === 'select' ||
+        target?.isContentEditable
+      ) {
+        return;
+      }
+
+      const navItem = NAV_ITEMS.find(
+        (item) => item.key === event.key.toLowerCase(),
+      );
+
+      if (!navItem) return;
+
+      event.preventDefault();
+      router.push(navItem.section === 'home' ? '/' : `/${navItem.section}`);
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [router]);
 
   return (
     <>
