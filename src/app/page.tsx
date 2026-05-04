@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { personalInfo } from '@/data/personal';
 import { projects } from '@/data/projects';
 import { skills } from '@/data/skills';
@@ -43,6 +43,55 @@ function MutedRow({ label, value }: { label: string; value: React.ReactNode }) {
       <span className="font-semibold text-neutral-600">{label}</span>
       <span className="text-neutral-400">{value}</span>
     </p>
+  );
+}
+
+const terminalLines = [
+  'Initializing...',
+  'Connected to macauive.dev',
+  'Links loaded. Standing by...',
+];
+
+function AnimatedTerminalStatus() {
+  const [visibleLineCount, setVisibleLineCount] = useState(0);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+
+    if (reduceMotion) {
+      setVisibleLineCount(terminalLines.length);
+      return;
+    }
+
+    setVisibleLineCount(0);
+
+    const timeouts = terminalLines.map((_, index) =>
+      window.setTimeout(
+        () => setVisibleLineCount(index + 1),
+        520 + index * 620,
+      ),
+    );
+
+    return () => timeouts.forEach((timeout) => window.clearTimeout(timeout));
+  }, []);
+
+  return (
+    <div className="mt-3 min-h-[3.75rem] space-y-1 text-[12px] leading-5 text-neutral-500">
+      {terminalLines.map((line, index) => (
+        <p
+          key={line}
+          className={`transition-all duration-500 ease-out ${
+            index < visibleLineCount
+              ? 'translate-y-0 opacity-100'
+              : 'translate-y-1 opacity-0'
+          }`}
+        >
+          {line}
+        </p>
+      ))}
+    </div>
   );
 }
 
@@ -189,12 +238,8 @@ export default function Home() {
             </nav>
 
             <div className="mt-8 rounded border border-neutral-800 bg-[#111212] p-3 md:absolute md:bottom-5 md:left-5 md:right-5 md:mt-0">
-              <Prompt>npx imacaulay</Prompt>
-              <div className="mt-3 space-y-1 text-[12px] leading-5 text-neutral-500">
-                <p>Initializing...</p>
-                <p>Connected to imacaulay.dev</p>
-                <p>Links loaded. Standing by...</p>
-              </div>
+              <Prompt>npx macauive</Prompt>
+              <AnimatedTerminalStatus />
             </div>
           </aside>
 
