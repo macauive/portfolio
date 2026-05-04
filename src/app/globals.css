@@ -28,3 +28,10 @@
     color: #f8fafc;
   }
 }
+
+@layer components {
+  .contact-link:hover,
+  .contact-link:hover span {
+    color: var(--color-cyan-400);
+  }
+}

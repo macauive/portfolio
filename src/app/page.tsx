@@ -37,12 +37,72 @@ function Prompt({ children }: { children: React.ReactNode }) {
   );
 }
 
-function MutedRow({ label, value }: { label: string; value: React.ReactNode }) {
+function MailIcon() {
   return (
-    <p className="grid grid-cols-[5.5rem_1fr] gap-5 font-mono text-[13px] leading-6 text-neutral-500">
-      <span className="font-semibold text-neutral-600">{label}</span>
-      <span className="text-neutral-400">{value}</span>
-    </p>
+    <svg
+      className="h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M21.75 6.75v10.5A2.25 2.25 0 0 1 19.5 19.5h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0-8.64 6.48a1.875 1.875 0 0 1-2.22 0L2.25 6.75"
+      />
+    </svg>
+  );
+}
+
+function GitHubIcon() {
+  return (
+    <svg
+      className="h-4 w-4"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path
+        fillRule="evenodd"
+        d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.05-.01-1.9-2.78.62-3.37-1.22-3.37-1.22-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.05A9.33 9.33 0 0 1 12 6.98c.85 0 1.71.12 2.51.34 1.91-1.32 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.59.69.49A10.13 10.13 0 0 0 22 12.26C22 6.58 17.52 2 12 2Z"
+        clipRule="evenodd"
+      />
+    </svg>
+  );
+}
+
+function ContactLink({
+  href,
+  icon,
+  label,
+  value,
+  external = false,
+}: {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+  external?: boolean;
+}) {
+  return (
+    <a
+      href={href}
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noopener noreferrer' : undefined}
+      className="contact-link group flex items-center gap-3 font-mono text-[13px] leading-6 text-neutral-500 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-400/50"
+    >
+      <span className="text-neutral-600 transition-colors group-hover:text-cyan-400">
+        {icon}
+      </span>
+      <span className="w-16 font-semibold text-neutral-600 transition-colors group-hover:text-cyan-400">
+        {label}
+      </span>
+      <span className="text-neutral-400 transition-colors group-hover:text-cyan-400">
+        {value}
+      </span>
+    </a>
   );
 }
 
@@ -376,29 +436,18 @@ export default function Home() {
                   </p>
 
                   <div className="space-y-2 pt-2">
-                    <MutedRow
+                    <ContactLink
+                      icon={<MailIcon />}
                       label="Email"
-                      value={
-                        <a
-                          href={`mailto:${personalInfo.email}`}
-                          className="font-semibold text-cyan-400 underline decoration-cyan-400/40 underline-offset-2"
-                        >
-                          {personalInfo.email}
-                        </a>
-                      }
+                      value={personalInfo.email}
+                      href={`mailto:${personalInfo.email}`}
                     />
-                    <MutedRow
+                    <ContactLink
+                      icon={<GitHubIcon />}
                       label="GitHub"
-                      value={
-                        <a
-                          href={`https://${personalInfo.github}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="font-semibold text-cyan-400 underline decoration-cyan-400/40 underline-offset-2"
-                        >
-                          {personalInfo.github}
-                        </a>
-                      }
+                      value={personalInfo.github}
+                      href={`https://${personalInfo.github}`}
+                      external
                     />
                   </div>
                 </div>
