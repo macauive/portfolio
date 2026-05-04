@@ -5,6 +5,6 @@ export const personalInfo: PersonalInfo = {
   title: 'AI Engineer',
   location: 'Fort Worth, TX',
   email: 'macauive@icloud.com',
-  github: 'github.com/imacaulay5',
+  github: 'github.com/macauive',
   summary: 'AI engineer building practical automation, transcription, lead scoring, data pipelines, and operational systems',
 };

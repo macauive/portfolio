@@ -52,7 +52,7 @@ Build a single-page, minimalist portfolio website using Next.js 14 (App Router),
 - Title: Software Engineer
 - Location: Fort Worth, TX
 - Email: iamacaulay5@gmail.com
-- GitHub: github.com/imacaulay5
+- GitHub: github.com/macauive
 - Summary: "Software engineer delivering integrations, data pipelines, and dashboards for e-commerce, manufacturing, and operations"
 
 **File: `data/skills.ts`**
@@ -208,7 +208,7 @@ Build a single-page, minimalist portfolio website using Next.js 14 (App Router),
 
 2. Push to GitHub:
    ```bash
-   git remote add origin https://github.com/imacaulay5/portfolio.git
+   git remote add origin https://github.com/macauive/portfolio.git
    git branch -M main
    git push -u origin main
    ```

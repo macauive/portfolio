@@ -295,7 +295,7 @@ export default function Home() {
             </Link>
 
             <div className="mt-6 space-y-1">
-              <p className="text-[13px] font-semibold leading-5 text-neutral-200">
+              <p className="text-[15px] font-semibold leading-6 text-neutral-200">
                 {personalInfo.title}
               </p>
               <p className="flex items-center gap-1 text-[12px] leading-5 text-neutral-600">
