@@ -1,14 +1,9 @@
 'use client';
 
 import { Project } from '@/types';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import TechBadge from './TechBadge';
-import ImageGallery from './ImageGallery';
-import CategoryBadge from './CategoryBadge';
-import { getProjectScreenshots, hasProjectImages } from '@/utils/imageHelpers';
-import { getCategoryColor } from '@/utils/categoryColors';
 
 interface ProjectModalProps {
   project: Project | null;
@@ -23,182 +18,131 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     return () => setMounted(false);
   }, []);
 
-  // Close on Escape key
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
     };
+
     window.addEventListener('keydown', handleEscape);
     return () => window.removeEventListener('keydown', handleEscape);
   }, [onClose]);
 
-  // Prevent body scroll when modal is open
   useEffect(() => {
-    if (project) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    document.body.style.overflow = project ? 'hidden' : '';
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
     };
   }, [project]);
 
-  if (!project || !mounted) return null;
-
-  const screenshots = getProjectScreenshots(project);
-  const hasImages = hasProjectImages(project);
-  const colors = getCategoryColor(project.category);
+  if (!mounted) return null;
 
   const modalContent = (
     <AnimatePresence>
       {project && (
         <>
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+            className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm"
           />
 
-          {/* Modal */}
           <div className="fixed inset-0 z-50 overflow-y-auto">
-            <div className="min-h-full flex items-center justify-center p-4">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                className="bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
-                onClick={(e) => e.stopPropagation()}
+            <div className="flex min-h-full items-center justify-center p-4">
+              <motion.article
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 18 }}
+                transition={{ duration: 0.18, ease: 'easeOut' }}
+                onClick={(event) => event.stopPropagation()}
+                className="w-full max-w-3xl rounded-lg border border-cyan-400/25 bg-zinc-950 shadow-2xl shadow-cyan-950/40"
               >
-                {/* Header with Category Color Gradient */}
-                <div className="relative px-8 py-6 overflow-hidden">
-                  {/* Subtle gradient background */}
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-5`}
-                  />
+                <header className="flex items-start justify-between gap-6 border-b border-zinc-800 px-5 py-5 sm:px-7">
+                  <div className="space-y-2">
+                    <p className="font-mono text-xs uppercase tracking-normal text-cyan-300">
+                      {project.category}
+                    </p>
+                    <h2 className="text-2xl font-medium leading-tight text-zinc-50 sm:text-3xl">
+                      {project.title}
+                    </h2>
+                  </div>
 
-                  <div className="relative flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        {project.featured && (
-                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100">
-                            Featured
-                          </span>
-                        )}
-                        <CategoryBadge category={project.category} variant="colored" />
-                      </div>
-                      <h2 className="text-3xl font-medium text-zinc-900 dark:text-zinc-50">
-                        {project.title}
-                      </h2>
-                      {project.timeline && (
-                        <p className="text-zinc-600 dark:text-zinc-400 mt-2">
-                          {project.timeline}
-                        </p>
-                      )}
-                    </div>
-
-                    <button
-                      onClick={onClose}
-                      className="ml-4 p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-900 dark:text-zinc-50"
-                      aria-label="Close modal"
+                  <button
+                    onClick={onClose}
+                    className="rounded-md p-2 text-zinc-400 transition-colors hover:bg-cyan-400/10 hover:text-cyan-200 focus:outline-none focus:ring-2 focus:ring-cyan-400/60"
+                    aria-label="Close project details"
+                  >
+                    <svg
+                      className="h-5 w-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
                     >
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18 18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </header>
 
-                {/* Content */}
-                <div className="px-8 py-6 space-y-8">
-                  {/* Image Gallery */}
-                  {hasImages && screenshots.length > 0 && (
-                    <div>
-                      <ImageGallery images={screenshots} project={project} />
-                    </div>
-                  )}
-
-                  {/* Video Demo */}
-                  {project.images?.demo && (
-                    <div>
-                      <h3 className="text-sm font-medium text-zinc-500 dark:text-zinc-400 mb-3">
-                        Demo
-                      </h3>
-                      <video
-                        controls
-                        className="w-full rounded-lg"
-                        poster={screenshots[0]}
-                      >
-                        <source src={project.images.demo} type="video/mp4" />
-                        Your browser does not support video playback.
-                      </video>
-                    </div>
-                  )}
-
-                  {/* Technologies */}
-                  <div>
-                    <h3 className="text-sm font-medium text-zinc-500 dark:text-zinc-400 mb-3">Technologies Used</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {project.technologies.map((tech) => (
-                        <TechBadge key={tech} technology={tech} />
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Description */}
-                  <div>
-                    <h3 className="text-sm font-medium text-zinc-500 dark:text-zinc-400 mb-3">Overview</h3>
-                    <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed text-lg">
+                <div className="space-y-8 px-5 py-6 sm:px-7">
+                  <section className="space-y-3">
+                    <p className="font-mono text-sm text-zinc-500">
+                      <span className="text-cyan-400">$</span> cat overview.md
+                    </p>
+                    <p className="border-l border-cyan-400/25 pl-5 text-base leading-8 text-zinc-300">
                       {project.detailedDescription}
                     </p>
-                  </div>
+                  </section>
 
-                  {/* Achievements */}
-                  {project.achievements && project.achievements.length > 0 && (
-                    <div>
-                      <h3 className="text-sm font-medium text-zinc-500 dark:text-zinc-400 mb-3">Key Achievements</h3>
-                      <ul className="space-y-3">
-                        {project.achievements.map((achievement, idx) => (
-                          <li key={idx} className="flex items-start gap-3">
-                            <svg
-                              className="w-6 h-6 shrink-0 mt-0.5"
-                              style={{ color: colors.light }}
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span className="text-zinc-700 dark:text-zinc-300 leading-relaxed">{achievement}</span>
+                  <section className="space-y-3">
+                    <p className="font-mono text-sm text-zinc-500">
+                      <span className="text-cyan-400">$</span> ls stack
+                    </p>
+                    <div className="flex flex-wrap gap-2 border-l border-cyan-400/25 pl-5">
+                      {project.technologies.map((technology) => (
+                        <span
+                          key={technology}
+                          className="rounded border border-zinc-800 bg-zinc-900 px-2 py-1 font-mono text-xs text-zinc-300"
+                        >
+                          {technology}
+                        </span>
+                      ))}
+                    </div>
+                  </section>
+
+                  {project.achievements.length > 0 && (
+                    <section className="space-y-3">
+                      <p className="font-mono text-sm text-zinc-500">
+                        <span className="text-cyan-400">$</span> cat impact.md
+                      </p>
+                      <ul className="space-y-3 border-l border-cyan-400/25 pl-5 text-sm leading-6 text-zinc-300">
+                        {project.achievements.map((achievement) => (
+                          <li key={achievement}>
+                            <span className="text-cyan-400">-</span>{' '}
+                            {achievement}
                           </li>
                         ))}
                       </ul>
-                    </div>
+                    </section>
                   )}
 
-                  {/* External Link */}
                   {project.link && (
                     <a
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-3 rounded-full transition-all hover:shadow-lg text-white"
-                      style={{
-                        backgroundColor: colors.light,
-                      }}
+                      className="inline-flex rounded border border-cyan-400/40 px-3 py-2 font-mono text-sm text-cyan-300 transition-colors hover:bg-cyan-400/10 hover:text-cyan-100 focus:outline-none focus:ring-2 focus:ring-cyan-400/60"
                     >
-                      <span>View Project</span>
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
+                      open project
                     </a>
                   )}
                 </div>
-              </motion.div>
+              </motion.article>
             </div>
           </div>
         </>

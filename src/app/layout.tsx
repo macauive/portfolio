@@ -6,11 +6,11 @@ import './globals.css';
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#ffffff',
+  themeColor: '#050505',
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://portfolio.vercel.app/'),
+  metadataBase: new URL('https://imacaulay.dev/'),
   alternates: {
     canonical: '/'
   },
@@ -39,11 +39,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geist.variable} ${geistMono.variable} bg-white tracking-tight antialiased dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50`}
+        className={`${geist.variable} ${geistMono.variable} bg-[#101111] antialiased text-zinc-100`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="flex min-h-screen w-full flex-col">
-            <div className="relative mx-auto w-full max-w-screen-sm flex-1 px-4 pt-20 pb-12">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          <div className="min-h-screen w-full bg-[#101111]">
+            <div className="relative min-h-screen w-full">
               {children}
             </div>
           </div>
