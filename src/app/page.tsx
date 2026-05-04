@@ -2,12 +2,11 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { personalInfo } from '@/data/personal';
 import { projects } from '@/data/projects';
 import { skills } from '@/data/skills';
 import { Project } from '@/types';
-import ProjectModal from '@/components/ProjectModal';
 
 type SectionKey = 'home' | 'work' | 'projects' | 'skills' | 'contact';
 
@@ -47,9 +46,42 @@ function MutedRow({ label, value }: { label: string; value: React.ReactNode }) {
   );
 }
 
+function ProjectRow({ project, showLink = false }: { project: Project; showLink?: boolean }) {
+  return (
+    <article className="border-b border-neutral-800 pb-5 last:border-b-0">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h2 className="text-[13px] font-semibold leading-5 text-neutral-200">
+            {project.title}
+          </h2>
+          <p className="mt-1 text-[12px] font-semibold leading-5 text-cyan-400">
+            {project.category}
+          </p>
+        </div>
+
+        {showLink && project.link && (
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 text-[12px] font-semibold leading-5 text-cyan-400 underline decoration-cyan-400/40 underline-offset-2 transition-colors hover:text-cyan-200"
+          >
+            open
+          </a>
+        )}
+      </div>
+      <p className="mt-2 text-[13px] leading-6 text-neutral-500">
+        {project.description}
+      </p>
+      <p className="mt-2 text-[12px] leading-5 text-neutral-600">
+        {project.technologies.slice(0, 5).join(' / ')}
+      </p>
+    </article>
+  );
+}
+
 export default function Home() {
   const pathname = usePathname();
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const selectedProjects = useMemo(() => {
     return selectedProjectIds
@@ -92,12 +124,12 @@ export default function Home() {
 
   return (
     <>
-      <main className="mx-auto flex min-h-screen w-full max-w-[920px] flex-col justify-center px-6 py-10 font-mono text-neutral-400">
-        <div className="grid min-h-[820px] overflow-hidden rounded-md border border-neutral-800 bg-[#101111] shadow-[0_0_0_1px_rgba(0,0,0,0.35)] md:grid-cols-[292px_1fr]">
-          <aside className="relative flex min-h-[820px] flex-col border-b border-neutral-800 p-5 md:border-b-0 md:border-r">
+      <main className="mx-auto flex min-h-screen w-full max-w-[920px] flex-col justify-start px-4 py-5 font-mono text-neutral-400 sm:px-6 sm:py-8 md:justify-center md:py-10">
+        <div className="grid overflow-hidden rounded-md border border-neutral-800 bg-[#101111] shadow-[0_0_0_1px_rgba(0,0,0,0.35)] md:min-h-[820px] md:grid-cols-[292px_1fr]">
+          <aside className="relative flex flex-col border-b border-neutral-800 p-5 md:min-h-[820px] md:border-b-0 md:border-r">
             <Link
               href="/"
-              className="w-fit text-[31px] font-bold leading-[0.96] tracking-normal text-cyan-400"
+              className="w-fit text-[31px] font-bold leading-[0.96] tracking-normal text-cyan-400 sm:text-[34px] md:text-[31px]"
               aria-label={`${personalInfo.name} home`}
             >
               <span className="block">Iver</span>
@@ -133,7 +165,10 @@ export default function Home() {
               </p>
             </div>
 
-            <nav aria-label="Primary navigation" className="mt-5 space-y-1">
+            <nav
+              aria-label="Primary navigation"
+              className="mt-5 space-y-1"
+            >
               {NAV_ITEMS.map((item) => {
                 const isActive = item.section === activeSection;
 
@@ -153,7 +188,7 @@ export default function Home() {
               })}
             </nav>
 
-            <div className="mt-10 rounded border border-neutral-800 bg-[#111212] p-3 md:absolute md:bottom-5 md:left-5 md:right-5 md:mt-0">
+            <div className="mt-8 rounded border border-neutral-800 bg-[#111212] p-3 md:absolute md:bottom-5 md:left-5 md:right-5 md:mt-0">
               <Prompt>npx imacaulay</Prompt>
               <div className="mt-3 space-y-1 text-[12px] leading-5 text-neutral-500">
                 <p>Initializing...</p>
@@ -163,12 +198,12 @@ export default function Home() {
             </div>
           </aside>
 
-          <section className="min-h-[820px]">
-            <header className="border-b border-neutral-800 px-5 py-4">
+          <section className="min-h-0 md:min-h-[820px]">
+            <header className="border-b border-neutral-800 px-5 py-4 md:px-5">
               <Prompt>cat {activeLabel}</Prompt>
             </header>
 
-            <div className="h-[calc(820px-49px)] overflow-y-auto px-5 py-5">
+            <div className="px-5 py-5 md:h-[calc(820px-49px)] md:overflow-y-auto">
               {activeSection === 'home' && (
                 <div className="max-w-[560px] space-y-6 text-[13px] leading-6 text-neutral-400">
                   <p>
@@ -204,25 +239,7 @@ export default function Home() {
               {activeSection === 'work' && (
                 <div className="max-w-[590px] space-y-5">
                   {selectedProjects.map((project) => (
-                    <button
-                      key={project.id}
-                      type="button"
-                      onClick={() => setSelectedProject(project)}
-                      className="block w-full border-b border-neutral-800 pb-5 text-left last:border-b-0 focus:outline-none focus:ring-2 focus:ring-cyan-400/50"
-                    >
-                      <span className="block text-[13px] font-semibold leading-5 text-neutral-200 transition-colors hover:text-cyan-400">
-                        {project.title}
-                      </span>
-                      <span className="mt-1 block text-[12px] font-semibold leading-5 text-cyan-400">
-                        {project.category}
-                      </span>
-                      <span className="mt-2 block text-[13px] leading-6 text-neutral-500">
-                        {project.description}
-                      </span>
-                      <span className="mt-2 block text-[12px] leading-5 text-neutral-600">
-                        {project.technologies.slice(0, 5).join(' / ')}
-                      </span>
-                    </button>
+                    <ProjectRow key={project.id} project={project} />
                   ))}
                 </div>
               )}
@@ -230,25 +247,11 @@ export default function Home() {
               {activeSection === 'projects' && (
                 <div className="max-w-[590px] space-y-5">
                   {productProjects.map((project) => (
-                    <button
+                    <ProjectRow
                       key={project.id}
-                      type="button"
-                      onClick={() => setSelectedProject(project)}
-                      className="block w-full border-b border-neutral-800 pb-5 text-left last:border-b-0 focus:outline-none focus:ring-2 focus:ring-cyan-400/50"
-                    >
-                      <span className="block text-[13px] font-semibold leading-5 text-neutral-200 transition-colors hover:text-cyan-400">
-                        {project.title}
-                      </span>
-                      <span className="mt-1 block text-[12px] font-semibold leading-5 text-cyan-400">
-                        {project.category}
-                      </span>
-                      <span className="mt-2 block text-[13px] leading-6 text-neutral-500">
-                        {project.description}
-                      </span>
-                      <span className="mt-2 block text-[12px] leading-5 text-neutral-600">
-                        {project.technologies.slice(0, 5).join(' / ')}
-                      </span>
-                    </button>
+                      project={project}
+                      showLink
+                    />
                   ))}
                 </div>
               )}
@@ -316,10 +319,7 @@ export default function Home() {
         </footer>
       </main>
 
-      <ProjectModal
-        project={selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
+      {/* ProjectModal is intentionally left in the codebase, but disabled for now. */}
     </>
   );
 }
