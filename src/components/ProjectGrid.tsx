@@ -8,14 +8,6 @@ import ProjectModal from './ProjectModal';
 import { motion } from 'framer-motion';
 import ProjectCarousel from './ProjectCarousel';
 
-export default function ProjectGrid() {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-
-  // Show only featured projects
-  const featuredProjects = useMemo(() => {
-    return projects.filter((project) => project.featured);
-  }, []);
-
   // Selected non-featured projects to display (5 total)
   const selectedProjectIds = [
     'erp-platform',
@@ -24,6 +16,14 @@ export default function ProjectGrid() {
     'shopify-store',
     'customer-portal'
   ];
+
+export default function ProjectGrid() {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  // Show only featured projects
+  const featuredProjects = useMemo(() => {
+    return projects.filter((project) => project.featured);
+  }, []);
 
   const nonFeaturedProjects = useMemo(() => {
     return projects.filter((project) => selectedProjectIds.includes(project.id));

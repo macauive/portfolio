@@ -10,7 +10,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://imacaulay.dev/'),
+  metadataBase: new URL('https://macauive.dev/'),
   alternates: {
     canonical: '/'
   },
@@ -18,6 +18,8 @@ export const metadata: Metadata = {
     default: 'Iver Macaulay - AI Engineer',
     template: '%s | Iver Macaulay'
   },
+  openGraph: { type: 'website', siteName: 'Iver Macaulay', images: ['/images/og/home.jpg'] },
+  twitter: { card: 'summary_large_image' },
   description: 'AI engineer building practical automation, transcription, lead scoring, data pipelines, and operational systems',
 };
 

@@ -1,0 +1,25 @@
+name: Checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm audit --audit-level=high
+      - run: npm run build
+      - run: |
+          npm start -- --port 3100 &
+          for attempt in $(seq 1 30); do
+            if curl --silent --fail http://127.0.0.1:3100/ > /dev/null; then break; fi
+            sleep 1
+          done
+          npm run test:smoke

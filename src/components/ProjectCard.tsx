@@ -13,7 +13,7 @@ interface ProjectCardProps {
   index: number;
 }
 
-export default function ProjectCard({ project, onClick, index }: ProjectCardProps) {
+export default function ProjectCard({ project, onClick }: ProjectCardProps) {
   const thumbnail = getProjectThumbnail(project);
   const colors = getCategoryColor(project.category);
 

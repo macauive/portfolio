@@ -5,16 +5,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test:smoke": "node scripts/smoke.mjs"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.17",
     "clsx": "^2.1.1",
     "framer-motion": "^11.15.0",
-    "next": "^16.0.7",
+    "next": "^16.3.4",
     "next-themes": "^0.4.6",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.17"
   },
@@ -23,6 +25,7 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.5",
     "eslint": "^9.25.0",
+    "eslint-config-next": "^16.3.4",
     "typescript": "^5.8.3"
   }
 }

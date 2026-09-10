@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, type PanInfo } from 'framer-motion';
 import { Project } from '@/types';
 import ProjectCard from './ProjectCard';
 import CarouselCard from './CarouselCard';
@@ -59,6 +59,20 @@ export default function ProjectCarousel({ projects, onProjectClick }: ProjectCar
     }
   }, [isInteracting, projects.length, cardsPerView]);
 
+  const nextSlide = useCallback(() => {
+    setCurrentIndex((prev) => {
+      const maxIndex = projects.length - cardsPerView;
+      return prev >= maxIndex ? 0 : prev + 1;
+    });
+  }, [projects.length, cardsPerView]);
+
+  const prevSlide = useCallback(() => {
+    setCurrentIndex((prev) => {
+      const maxIndex = projects.length - cardsPerView;
+      return prev <= 0 ? maxIndex : prev - 1;
+    });
+  }, [projects.length, cardsPerView]);
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -73,23 +87,9 @@ export default function ProjectCarousel({ projects, onProjectClick }: ProjectCar
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, cardsPerView, projects.length]);
+  }, [nextSlide, prevSlide]);
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => {
-      const maxIndex = projects.length - cardsPerView;
-      return prev >= maxIndex ? 0 : prev + 1;
-    });
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => {
-      const maxIndex = projects.length - cardsPerView;
-      return prev <= 0 ? maxIndex : prev - 1;
-    });
-  };
-
-  const handleDragEnd = (_event: any, info: any) => {
+  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const offset = info.offset.x;
     const velocity = info.velocity.x;
 
