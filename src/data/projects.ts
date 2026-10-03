@@ -2,6 +2,38 @@ import { Project } from '@/types';
 
 export const projects: Project[] = [
   {
+    id: 'mac-digital',
+    title: 'Mac Digital',
+    category: 'AI & Automation',
+    technologies: ['Next.js', 'TypeScript', 'OpenAI', 'React', 'Vercel'],
+    description: 'Website studio with an interactive AI demo for generating design concepts, copy, and imagery',
+    detailedDescription: 'Built Mac Digital, a responsive website for website services and practical AI integrations. Its interactive demo turns a business prompt into a browsable website concept with generated copy, optional imagery, and independently selectable layouts and typography. The experience supports light and dark themes, reduced motion, cancellation, and image retries, with validated structured output and server-side generation limits.',
+    achievements: [
+      'Built ten interactive concept layouts and ten typography styles',
+      'Integrated AI-generated copy, design choices, and optional hero imagery',
+      'Added structured-output validation, cancellation, and shared generation limits',
+      'Created a responsive services and selected-work showcase on Vercel',
+    ],
+    featured: true,
+    link: 'https://macdigital.ai',
+  },
+  {
+    id: 'drop-it',
+    title: 'Drop It',
+    category: 'Product Development',
+    technologies: ['React', 'TypeScript', 'Express', 'PostgreSQL', 'MCP'],
+    description: 'Private library for screenshots, files, text, and links, with optional AI search and ChatGPT integration',
+    detailedDescription: 'Built Drop It, a private saved-for-later library with a React web interface and a ChatGPT-compatible MCP server. Users can capture screenshots, files, text, and links; review AI-drafted summaries and transcription; and retrieve saved content with keyword or optional hybrid search. Original sources stay separate from editable summaries and notes. The app includes bookmarks, tags, recoverable Trash, portable backups, and OAuth connections scoped to each account.',
+    achievements: [
+      'Built capture, search, and editing workflows that preserve original sources',
+      'Integrated optional AI drafting and hybrid search with account-scoped retrieval',
+      'Created MCP tools and an embedded React widget for ChatGPT',
+      'Implemented OAuth with PKCE, portable backup and restore, and seven-day Trash recovery',
+    ],
+    featured: true,
+    link: 'https://dontdropit.app',
+  },
+  {
     id: 'amountly',
     title: 'Amountly',
     category: 'Product Development',

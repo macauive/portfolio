@@ -27,7 +27,7 @@ const selectedProjectIds = [
   'hubspot-crm',
 ];
 
-const productProjectIds = ['amountly'];
+const productProjectIds = ['mac-digital', 'drop-it', 'amountly'];
 
 function Prompt({ children }: { children: React.ReactNode }) {
   return (
