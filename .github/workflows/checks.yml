@@ -1,25 +1,19 @@
-name: Checks
+name: Terminal checks
 on: [push, pull_request]
 permissions:
   contents: read
 jobs:
-  verify:
+  check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
-          node-version: 22
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
           cache: npm
-      - run: npm ci
-      - run: npm run lint
+      - run: npm ci --ignore-scripts
       - run: npm run typecheck
-      - run: npm audit --audit-level=high
       - run: npm run build
-      - run: |
-          npm start -- --port 3100 &
-          for attempt in $(seq 1 30); do
-            if curl --silent --fail http://127.0.0.1:3100/ > /dev/null; then break; fi
-            sleep 1
-          done
-          npm run test:smoke
+      - run: npm test

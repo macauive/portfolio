@@ -1,0 +1,38 @@
+{
+  "target": "Claude Code v2.1.246, installed native ARM64 executable",
+  "method": "REA capture_process_scenario, bounded PTY runs",
+  "executable_sha256": "7b09f01cb76a38e0e3a7c47c5d698d382162a5ff26538fc778683770caf9218b",
+  "configuration": "Safe mode; no tools; empty strict MCP configuration; no generative prompts submitted",
+  "captures": [
+    { "evidence_id": "ev_0fdf09efdca83445d58c05c8ecbb9ddfc595c7f4462946795d7e188a1b7c4dbc", "scope": "Startup prompt and shortcut footer", "exit_code": 0 },
+    { "evidence_id": "ev_557a230f0058f091bf7c5b61dbc1171062b102772a4eed137f0169449370405c", "scope": "Slash picker, arrow selection, Tab acceptance, shortcut help, multiline input, Ctrl+C", "exit_code": 0, "rendered_frames_truncated": false },
+    { "evidence_id": "ev_188e49fd4f7edc3a2022146f4252e60683f848a28f2c3d86f887de9a1457a0c8", "scope": "Filtered help, Escape dismissal, Ctrl+S stash and restore, double Escape", "exit_code": 0, "rendered_frames_truncated": false }
+  ],
+  "observations": [
+    { "capture": 0, "behavior": "Prompt sits between horizontal rules near the bottom of the terminal, with a compact shortcut footer." },
+    { "capture": 1, "at_ms": [1120, 1620, 2110], "behavior": "Slash opens a command list with descriptions. Down changes the selected command, and Tab inserts that command with an argument hint." },
+    { "capture": 1, "at_ms": [3510, 4160], "behavior": "Question mark on an empty prompt expands inline shortcuts. Escape closes them." },
+    { "capture": 1, "at_ms": [5110, 5600, 6310], "behavior": "Alt+Enter followed by typing produces a second input line. Ctrl+C clears the draft." },
+    { "capture": 2, "at_ms": [1120, 1710, 2560], "behavior": "Typing /he filters suggestions. Enter opens help, and Escape returns to an empty prompt." },
+    { "capture": 2, "at_ms": [3700, 4300], "behavior": "Ctrl+S stashes a draft with a footer indicator, and Ctrl+S on the empty prompt restores it." },
+    { "capture": 2, "at_ms": [4950, 5260], "behavior": "First Escape shows a clear hint; a second Escape clears the draft." }
+  ],
+  "documented_adaptations": [
+    { "behavior": "Ctrl+R opens history search; Enter or Tab restores a selection for editing.", "source": "https://code.claude.com/docs/en/interactive-mode#reverse-search-with-ctrl-r", "runtime_observed": false },
+    { "behavior": "Shift+Enter and backslash+Enter are alternate newline shortcuts.", "source": "https://code.claude.com/docs/en/interactive-mode#multiline-input", "runtime_observed": false }
+  ],
+  "portfolio_decisions": [
+    "Keep the cyan pixel bat, welcome box, product order, and portfolio content.",
+    "Use the observed picker and editing interactions for allowlisted browser-local commands.",
+    "Keep history and stashed drafts in memory, limited to this tab.",
+    "Provide touch controls, visible focus, concise status announcements, and normal readable page scrolling.",
+    "Keep all commands within portfolio exploration; no shell or AI backend is introduced."
+  ],
+  "limits": [
+    "Study covers this installed version and the selected safe-mode configuration, not all Claude Code versions or customizations.",
+    "No inspection of existing Claude prompt history or model/tool execution was performed.",
+    "Raw captures stay outside the published Site; this ledger contains only the relevant observations.",
+    "REA process sampling can omit short-lived descendants and does not observe network activity or all filesystem effects.",
+    "Terminal pixel equivalence and proprietary implementation recovery were not claimed."
+  ]
+}

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101111">
+  <meta name="description" content="Iver Macaulay’s portfolio. Explore practical AI, automation, selected work, and products through a browser-local CLI.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>macauive · portfolio</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/lightning.svg">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script type="module" src="/assets/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#command">Skip to command prompt</a>
+  <main class="terminal" aria-label="Iver Macaulay portfolio">
+    <fieldset class="welcome">
+      <legend><span class="brand">macauive</span> <span class="secondary">portfolio</span></legend>
+      <div class="welcome-grid">
+        <section class="identity" aria-label="Welcome">
+          <h1>Welcome, I'm Iver.</h1>
+          <img class="lightning" src="/assets/lightning.svg" alt="" width="80" height="80">
+          <p>Iver Macaulay · AI Engineer</p>
+          <p>~/portfolio</p>
+        </section>
+        <section class="guide" aria-label="Getting started">
+          <h2>Getting started</h2>
+          <p>Type <button data-command="/projects">/projects</button> to explore what I've built</p>
+          <p class="question-guide">Or ask a question about me and my projects.</p>
+          <hr>
+          <h2>Explore my work</h2>
+          <div class="products"><button data-command="/project mac-digital">Mac Digital</button><span>·</span><button data-command="/project drop-it">Drop It</button><span>·</span><button data-command="/project amountly">Amountly</button></div>
+          <nav aria-label="Portfolio commands"><button data-command="/about">/about</button><button data-command="/work">/work</button><button data-command="/skills">/skills</button><button data-command="/contact">/contact</button></nav>
+        </section>
+      </div>
+    </fieldset>
+    <section id="output" class="output" aria-label="Command history"></section>
+    <div class="command-hint"><span>Try asking</span> <button data-question="Which projects use Python?">Which projects use Python?</button><span class="hint-separator"> · </span><button data-question="How can I contact Iver?">How can I contact Iver?</button></div>
+    <div class="composer">
+      <section id="history-search" class="history-search" aria-labelledby="history-title" hidden>
+        <div class="panel-heading"><h2 id="history-title">Search command history</h2><button id="close-history" type="button" aria-label="Close history search">Esc · close</button></div>
+        <label class="sr-only" for="history-query">Search session history</label>
+        <input id="history-query" type="search" maxlength="160" placeholder="Search this session…" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="true" aria-controls="history-results" aria-describedby="history-guidance">
+        <div id="history-results" role="listbox" aria-label="History results"></div>
+        <p id="history-empty" hidden>No matching commands in this session.</p>
+        <p id="history-guidance">↑ ↓ choose · Enter restores to prompt · Esc keeps your draft</p>
+      </section>
+      <div id="suggestions" class="suggestions" role="listbox" aria-label="Command suggestions" hidden></div>
+      <div id="prompt-note" class="prompt-note" aria-live="off"></div>
+      <form id="prompt" autocomplete="off">
+        <label class="prompt-symbol" for="command"><span aria-hidden="true">❯</span><span class="sr-only">Portfolio command</span></label>
+        <div class="prompt-input" data-caret="native">
+          <textarea id="command" name="command" rows="1" maxlength="1200" placeholder="Ask about me, or type /" spellcheck="false" autocapitalize="off" autocorrect="off" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-describedby="keyboard-hint" aria-controls="suggestions" aria-expanded="false"></textarea>
+          <div id="caret-mirror" aria-hidden="true" hidden><span id="caret-before"></span><span id="block-caret"></span><span id="caret-after"></span></div>
+        </div>
+        <button id="cancel-answer" type="button" hidden aria-label="Cancel answer">Esc · stop</button>
+        <button class="submit" type="submit" aria-label="Run command">↵</button>
+      </form>
+      <div id="keyboard-hint" class="keyboard-hint"><button id="toggle-shortcuts" type="button" aria-expanded="false" aria-controls="shortcut-panel">? for shortcuts</button><button id="open-history" type="button">Ctrl+R history</button><button id="restore-stash" type="button" hidden>draft stashed · restore</button><span>/ commands · Shift+Enter newline</span></div>
+      <section id="shortcut-panel" class="shortcut-panel" aria-label="Keyboard shortcuts" hidden>
+        <div class="shortcut-grid">
+          <span><kbd>/</kbd> choose a command</span><span><kbd>↑ ↓</kbd> menu or history</span><span><kbd>Tab</kbd> complete selection</span><span><kbd>Enter</kbd> run command</span><span><kbd>Shift+Enter</kbd> newline</span><span><kbd>Esc</kbd> close a panel</span><span><kbd>Esc Esc</kbd> clear draft</span><span><kbd>Ctrl+R</kbd> search history</span><span><kbd>Ctrl+S</kbd> stash / restore draft</span><span><kbd>Ctrl+U</kbd> delete to line start</span><span><kbd>Ctrl+C</kbd> clear prompt</span><span><kbd>?</kbd> toggle shortcuts</span>
+        </div>
+        <p>Ask a normal question, or explore with <button data-command="/projects">/projects</button>. Answers use portfolio content. Escape stops an answer.</p>
+      </section>
+    </div>
+    <p id="status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+    <noscript><p>Enable JavaScript to explore the portfolio commands. Reach Iver at <a href="mailto:macauive@pm.me">macauive@pm.me</a> or <a href="https://github.com/macauive">GitHub</a>.</p></noscript>
+  </main>
+</body>
+</html>
