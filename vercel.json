@@ -1,14 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": null,
-  "installCommand": "",
-  "buildCommand": "",
-  "outputDirectory": "vercel-public",
-  "redirects": [
-    {
-      "source": "/:path*",
-      "destination": "https://www.macauive.dev/",
-      "permanent": false
-    }
-  ]
+  "git": {
+    "deploymentEnabled": false
+  }
 }

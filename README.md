@@ -2,7 +2,7 @@
 
 The main portfolio is a compact cyan lightning terminal with anonymous portfolio commands and conversational AI questions. Its full application and answer endpoint run on ChatGPT Sites. The Site identity is in `.openai/hosting.json`; reuse it on updates. The former Next.js portfolio is preserved on the GitHub branch `legacy-portfolio` at commit `60d9c13553c5ebf9e4dbdd3dbfa59f8c0b6e1d17`, including its images, source and dependency lockfile.
 
-The existing Vercel project only forwards visitors to `https://www.macauive.dev/` using `vercel.json` and the small `vercel-public/` fallback. It does not host the Worker, serve application source, or need an OpenAI key. The temporary redirect keeps the terminal reachable while the apex domain's DNS moves to Sites; it can remain as a fallback for the old Vercel address.
+The terminal is live at `https://www.macauive.dev/`. The existing Vercel deployment and its domain routing remain unchanged. This Worker uses Sites storage and secrets and is not a Vercel application. `vercel.json` sets `git.deploymentEnabled` to `false` so promoting or updating this source cannot automatically deploy it over the existing Vercel site. There are no redirect rules or Vercel runtime changes in this promotion. A future Vercel migration needs a separate deployment decision.
 
 To work on the old design independently, fetch the repository and run `git worktree add ../portfolio-legacy legacy-portfolio`. Do not reset or overwrite the terminal checkout to inspect the legacy design. The original working checkout's unrelated personal-data edit is intentionally excluded from this promotion.
 
